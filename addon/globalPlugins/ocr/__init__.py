@@ -1,9 +1,9 @@
 """NVDA OCR plugin
 This plugin uses Tesseract for OCR: http://code.google.com/p/tesseract-ocr/
-It also uses the Python Imaging Library (PIL): http://www.pythonware.com/products/pil/
 @author: James Teh <jamie@nvaccess.org>
 @author: Rui Batista <ruiandrebatista@gmail.com>
-@copyright: 2011-2013 NV Access Limited, Rui Batista
+@author: Alexey <aleks-samos@yandex.ru>
+@copyright: 2011-2020 NV Access Limited, Rui Batista, alekssamos
 @license: GNU General Public License version 2.0
 """
 
@@ -15,7 +15,7 @@ from xml.parsers import expat
 from collections import namedtuple
 from io import StringIO
 import configobj
-import validate
+from configobj import validate
 import wx
 import config
 import globalPluginHandler
@@ -32,8 +32,6 @@ import locationHelper
 PLUGIN_DIR = os.path.dirname(__file__)
 TESSERACT_EXE = os.path.join(PLUGIN_DIR, "tesseract", "tesseract.exe")
 
-from .PIL import ImageGrab
-from .PIL import Image
 
 IMAGE_RESIZE_FACTOR = 2
 
@@ -172,15 +170,18 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_ocrNavigatorObject(self, gesture):
 		nav = api.getNavigatorObject()
 		left, top, width, height = nav.location
-		img = ImageGrab.grab(bbox=(left, top, left + width, top + height))
+		bmp = wx.EmptyBitmap(width, height)
 		# Tesseract copes better if we convert to black and white...
-		img = img.convert(mode='L')
+		## img = img.convert(mode='L')
 		# and increase the size.
-		img = img.resize((width * IMAGE_RESIZE_FACTOR, height * IMAGE_RESIZE_FACTOR), Image.BICUBIC)
+		## img = img.resize((width * IMAGE_RESIZE_FACTOR, height * IMAGE_RESIZE_FACTOR), Image.BICUBIC)
+		mem = wx.MemoryDC(bmp)
+		mem.Blit(0, 0, width, height, wx.ScreenDC(), left, top)
+		
 		baseFile = os.path.join(tempfile.gettempdir(), "nvda_ocr")
 		try:
 			imgFile = baseFile + ".bmp"
-			img.save(imgFile)
+			bmp.SaveFile(imgFile, wx.BITMAP_TYPE_BMP)
 
 			ui.message(_("Running OCR"))
 			lang = getConfig()['language']
@@ -198,7 +199,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			hocrFile = baseFile + ".html"
 
-			parser = HocrParser(open(hocrFile,encoding='utf8').read(),
+			parser = HocrParser(open(hocrFile,encoding='utf8',mode='w+').read(),
 				left, top)
 		finally:
 			try:

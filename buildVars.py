@@ -22,9 +22,9 @@ The Tesseract OCR engine is used.
 To perform OCR, move to the object in question using object navigation and press NVDA+r.
 You can set the OCR recognition language by going to the NVDA preferences menu and selecting OCR settings."""),
 	# version
-	"addon_version" : "2020.1",
+	"addon_version" : "2020.2",
 	# Author(s)
-	"addon_author" : u"NV Access Limited <info@nvaccess.org>",
+	"addon_author" : u"NV Access Limited <info@nvaccess.org>, Alexey <aleks-samos@yandex.ru>",
 	# URL for the add-on documentation support
 	"addon_url" : None,
 	# Documentation file name

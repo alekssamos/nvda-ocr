@@ -1,5 +1,7 @@
 addon/doc/*.css
 addon/doc/en/
+addon/doc/ru/
+addon/globalPlugins/ocr/tesseract
 *_docHandler.py
 *.html
 *.ini
@@ -8,3 +10,6 @@ addon/doc/en/
 *.py[co]
 *.nvda-addon
 .sconsign.dblite
+*.zip
+*.gz
+*.exe

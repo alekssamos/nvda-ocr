@@ -7,13 +7,20 @@ import urllib
 import fnmatch
 import shutil
 import zipfile
+import tarfile
 
 TESSERACT_DOWNLOAD_URL = "http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02-win32-portable.zip"
-PIL_DOWNLOAD_URL = "http://effbot.org/downloads/PIL-1.1.7.win32-py2.7.exe"
+TESSERACT_LANGS_DOWNLOAD_URLS = {
+	## add other languages
+	## from https://sourceforge.net/projects/tesseract-ocr-alt/files/
+	## eng default exist if not remove
+	## "eng": "https://netix.dl.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-3.02.eng.tar.gz",
+}
 
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 DEPS_DIR = os.path.join(ROOT_DIR, "deps")
 PLUGIN_DIR = os.path.join(ROOT_DIR, "addon", "globalPlugins", "ocr")
+TESSDATA_DIR = os.path.join(PLUGIN_DIR, "tesseract", "tessdata")
 
 depFiles = set()
 
@@ -23,7 +30,8 @@ def downloadDeps():
 	except OSError:
 		pass
 
-	urls = [TESSERACT_DOWNLOAD_URL, PIL_DOWNLOAD_URL]
+	urls = [TESSERACT_DOWNLOAD_URL]
+	urls.extend(list(TESSERACT_LANGS_DOWNLOAD_URLS.values()))
 
 	print("Downloading dependencies")
 	for url in urls:
@@ -67,28 +75,34 @@ def extractTesseract():
 			with zf.open(realFn) as inf, file(extractFn, "wb") as outf:
 				shutil.copyfileobj(inf, outf)
 
-def extractPil():
-	pilDir = os.path.join(PLUGIN_DIR, "PIL")
-	print "Extracting PIL"
-	shutil.rmtree(pilDir, ignore_errors=True)
-	try:
-		os.mkdir(pilDir)
-	except OSError:
-		pass
-
-	with zipfile.ZipFile(os.path.join(DEPS_DIR, os.path.basename(PIL_DOWNLOAD_URL))) as zf:
-		for realFn in zf.namelist():
-			if not realFn.startswith("PLATLIB/PIL/") or realFn.endswith("/"):
-				continue
-			fn = os.path.basename(realFn)
-			extractFn = os.path.join(pilDir, fn)
-			with zf.open(realFn) as inf, file(extractFn, "wb") as outf:
-				shutil.copyfileobj(inf, outf)
+def extractLangTesseract(lang):
+	tmp1 = os.path.join(PLUGIN_DIR, "tesseract-ocr", "tessdata")
+	for gzfn in depFiles:
+		if fnmatch.fnmatch(gzfn, "*/tesseract-ocr-*.???.tar.gz"):
+			break
+	else:
+		assert False
+	print "Extracting {} Tesseract".format(lang)
+	tf = tarfile.open(gzfn)
+	for tfn in tf.getnames():
+		tf.extract(tfn, path = PLUGIN_DIR)
+	if not os.path.isdir(TESSDATA_DIR):
+		os.makedirs(TESSDATA_DIR)
+	folder = []
+	for i in os.walk(tmp1):
+		folder.append(i)
+	for address, dirs, files in folder:
+		for file in files:
+			curpath =os.path.join(address, file)
+			shutil.copy(curpath, os.path.join(TESSDATA_DIR, file))
+			os.remove(curpath)
+	shutil.rmtree(os.path.join(tmp1, ".."))
 
 def main():
 	downloadDeps()
 	extractTesseract()
-	extractPil()
+	for tl in TESSERACT_LANGS_DOWNLOAD_URLS:
+		extractLangTesseract(tl)
 
 if __name__ == "__main__":
 	main()
