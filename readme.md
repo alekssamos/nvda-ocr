@@ -8,6 +8,7 @@ You can set the OCR recognition language by going to the NVDA preferences menu a
 selecting OCR settings.
 Work on NVDA 2019.3+
 Now you do not need to press numpad + plus, the result appears in the virtual viewer.
+You can choose two recognition languages, before there was only one.
 
 ## Russian
 Выполняет оптическое распознавание символов (OCR) для извлечения текста из объекта, который
@@ -18,6 +19,7 @@ Now you do not need to press numpad + plus, the result appears in the virtual vi
 выбрав настройки OCR.
 Работает на NVDA 2019.3+
 Теперь не нужно нажимать numpad + plus, результат появляется в виртуальном просмотрщике.
+Можно выбрать два языка распознавания, раньше был только один.
 
 # Download / Скачать
-[Version / Версия 2020.2.1](https://www.dropbox.com/s/9l5ivkbdbw61ivj/ocr-2020.2.1.nvda-addon?dl=1)
+[Version / Версия 2020.3](https://www.dropbox.com/s/zqceydp7lysh4hk/ocr-2020.3.nvda-addon?dl=1)
