@@ -106,10 +106,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Let the user review the OCR output.
 		result = ""
 		try:
-			with open(txtFile, encoding="UTF-8") as f: result = f.read()
+			with open(txtFile, encoding="UTF-8") as f: result = f.read().strip()
 		except: pass
 		os.remove(txtFile)
-		if result.strip() != "":
+		if result != "":
 			ui.message(_("Done"))
 			try:
 				ui.browseableMessage(result, _("OCR Result"))
