@@ -9,7 +9,7 @@ import shutil
 import zipfile
 import tarfile
 
-TESSERACT_DOWNLOAD_URL = "http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02-win32-portable.zip"
+TESSERACT_DOWNLOAD_URL = "https://excellmedia.dl.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-3.02-win32-portable.zip"
 TESSERACT_LANGS_DOWNLOAD_URLS = {
 	## add other languages
 	## from https://sourceforge.net/projects/tesseract-ocr-alt/files/
