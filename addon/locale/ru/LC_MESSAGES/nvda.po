@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OCR2020\n"
-"POT-Creation-Date: 2020-03-15 04:04+0300\n"
-"PO-Revision-Date: 2020-03-15 04:05+0300\n"
+"POT-Creation-Date: 2020-03-16 00:21+0300\n"
+"PO-Revision-Date: 2020-03-16 00:22+0300\n"
 "Last-Translator: Alex <aleks-samos@yandex.ru>\n"
 "Language-Team: alekssamos\n"
 "Language: ru\n"
@@ -15,34 +15,38 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: __init__.py\n"
 
-#: __init__.py:45
-msgid "OCR settings..."
-msgstr "Настройки OCR"
-
-#: __init__.py:64
-msgid "Select OCR Language"
-msgstr "Выберите язык распознавания"
-
-#: __init__.py:64
+#: __init__.py:89
 msgid "OCR Settings"
 msgstr "Настройки OCR"
 
-#: __init__.py:93
+#: __init__.py:105
+msgid "Select OCR Language"
+msgstr "Выберите язык распознавания"
+
+#: __init__.py:113
+msgid "Select second OCR Language"
+msgstr "Выберите второй язык распознавания"
+
+#: __init__.py:135
+msgid "OCR settings..."
+msgstr "Настройки OCR"
+
+#: __init__.py:161
 msgid "Running OCR"
 msgstr "Запуск распознавания"
 
-#: __init__.py:113
+#: __init__.py:186
 msgid "Done"
 msgstr "Готово"
 
-#: __init__.py:115
+#: __init__.py:188
 msgid "OCR Result"
 msgstr "Результат распознавания"
 
-#: __init__.py:119
+#: __init__.py:192
 msgid "Error"
 msgstr "Ошибка"
 
-#: __init__.py:120
+#: __init__.py:193
 msgid "Recognize text use tesseract."
 msgstr "Распознать текст используя tesseract"
