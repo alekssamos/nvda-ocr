@@ -15,6 +15,7 @@ TESSERACT_LANGS_DOWNLOAD_URLS = {
 	## from https://sourceforge.net/projects/tesseract-ocr-alt/files/
 	## eng default exist if not remove
 	## "eng": "https://netix.dl.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-3.02.eng.tar.gz",
+	"rus": "https://netix.dl.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-3.02.rus.tar.gz"
 }
 
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
